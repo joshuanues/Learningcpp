@@ -14,7 +14,7 @@ public:
     Matrix(int n, int m); // Constructor [nxm]
     ~Matrix(); // Destructor
 
-    // Setters and getters
+    // Setters and gettersc
     void set(int i, int j, T value); // Set value to (i,j) <row,column>
     T get(int i, int j) const; // Get value from (i,j) <row,column>
     void fill(T value); // Fill all the matrix with a value
