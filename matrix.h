@@ -59,3 +59,185 @@ public:
     // Bonus (1pt), returns inverse of the Matrix
     Matrix<T> inverse() const;
 };
+
+// Constructor to destructor
+template <class T>
+Matrix<T>::Matrix()
+{}
+
+template <class T>
+Matrix<T>::Matrix(int n) {
+
+}
+
+template<class T>
+Matrix<T>::Matrix(int n, int m) {
+
+}
+
+template<class T>
+Matrix<T>::~Matrix() {
+}
+
+//Setters and getters
+template<class T>
+void Matrix<T>::set(int i, int j, T value) {
+
+}
+
+template<class T>
+T Matrix<T>::get(int i, int j) const {
+    return nullptr;
+}
+
+template<class T>
+void Matrix<T>::fill(T value) {
+
+}
+
+//Dimensions
+template<class T>
+int *Matrix<T>::size() const {
+    return nullptr;
+}
+
+template<class T>
+int Matrix<T>::length() const {
+    return 0;
+}
+
+//Values
+template<class T>
+T Matrix<T>::max() const {
+    return nullptr;
+}
+
+template<class T>
+T Matrix<T>::min() const {
+    return nullptr;
+}
+
+template<class T>
+T Matrix<T>::det() const {
+    return nullptr;
+}
+
+template<class T>
+T Matrix<T>::norm() const {
+    return nullptr;
+}
+
+//utilitary functions
+template<class T>
+void Matrix<T>::disp() const {
+
+}
+
+template<class T>
+void Matrix<T>::save_to_file(std::string filename) const {
+
+}
+
+template<class T>
+Matrix<T> *Matrix<T>::clone() const {
+    return nullptr;
+}
+
+//Booleans
+template<class T>
+bool Matrix<T>::equals(Matrix<T> *mat) const {
+    return false;
+}
+
+template<class T>
+bool Matrix<T>::is_diag() const {
+    return false;
+}
+
+template<class T>
+bool Matrix<T>::is_identity() const {
+    return false;
+}
+
+template<class T>
+bool Matrix<T>::is_symmetric() const {
+    return false;
+}
+
+template<class T>
+bool Matrix<T>::is_square() const {
+    return false;
+}
+
+template<class T>
+bool Matrix<T>::is_vector() const {
+    return false;
+}
+
+template<class T>
+bool Matrix<T>::operator==(const Matrix<T> &matrix) const {
+    return false;
+}
+
+template<class T>
+bool Matrix<T>::operator!=(const Matrix<T> &matrix) const {
+    return false;
+}
+
+
+//Mathematical operations
+template<class T>
+Matrix<T> *Matrix<T>::transpose() const {
+    return nullptr;
+}
+
+template<class T>
+Matrix<T> &Matrix<T>::operator*=(const Matrix<T> &matrix) {
+    return 0;
+}
+
+template<class T>
+Matrix<T> *Matrix<T>::operator*=(const Matrix<T> &matrix) const {
+    return nullptr;
+}
+
+template<class T>
+Matrix<T> &Matrix<T>::operator*=(T a) {
+    return 0;
+}
+
+template<class T>
+Matrix<T> *Matrix<T>::operator*=(T a) const {
+    return nullptr;
+}
+
+template<class T>
+Matrix<T> &Matrix<T>::operator+=(const Matrix<T> *matrix) {
+    return 0;
+}
+
+template<class T>
+Matrix<T> *Matrix<T>::operator+(const Matrix<T> &matrix) const {
+    return nullptr;
+}
+
+template<class T>
+Matrix<T> &Matrix<T>::operator-=(const Matrix<T> *matrix) {
+    return 0;
+}
+
+template<class T>
+Matrix<T> *Matrix<T>::operator-(const Matrix<T> &matrix) const {
+    return nullptr;
+}
+
+template<class T>
+void Matrix<T>::normalize() {
+
+}
+
+//Bonus
+template<class T>
+Matrix<T> Matrix<T>::inverse() const {
+    return Matrix<T>();
+}
