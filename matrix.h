@@ -141,7 +141,7 @@ void Matrix<T>::disp() const {
     std::cout<< "/**"<< std::endl;
     for(int i=0; i< this->n; i++){
         for(int j=0; j< this->m; j++) {
-            std::cout<< mat->get(i,j);
+            std::cout<< mat[i][j];
         }
         std::cout<< "" <<std::endl;
     }
