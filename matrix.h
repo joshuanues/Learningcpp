@@ -108,29 +108,57 @@ T Matrix<T>::get(int i, int j) const {
 
 template<class T>
 void Matrix<T>::fill(T value) {
-
+    for(int i = 0; i< n; i++){
+        for(int j = 0; j < m; j++){
+            mat[i][j] = value;
+        }
+    }
 }
 
 //Dimensions
 template<class T>
 int *Matrix<T>::size() const {
-    return nullptr;
+    int *dimensions = new int[2];
+    dimensions[0] = n;
+    dimensions[1] = m;
+    return dimensions;
 }
 
 template<class T>
 int Matrix<T>::length() const {
-    return 0;
+    if(n > m){
+        return n;
+    }
+    else{
+        return m;
+    }
 }
 
 //Values
 template<class T>
 T Matrix<T>::max() const {
-    return nullptr;
+    T candidate = mat[0][0];
+    for(int i = 0; i< n; i++){
+        for(int j = 0; j < m; j++){
+            if(mat[i][j] > candidate){
+                candidate = mat[i][j];
+            }
+        }
+    }
+    return candidate;
 }
 
 template<class T>
 T Matrix<T>::min() const {
-    return nullptr;
+    T candidate = mat[0][0];
+    for(int i = 0; i< n; i++){
+        for(int j = 0; j < m; j++){
+            if(mat[i][j] < candidate){
+                candidate = mat[i][j];
+            }
+        }
+    }
+    return candidate;
 }
 
 template<class T>
