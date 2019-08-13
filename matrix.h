@@ -5,11 +5,11 @@
 template<class T>
 class Matrix {
 private:
-    T *mat; // Store the matrix
+    T **mat; // Store the matrix
     int n = 0; // Number of columns
     int m = 0; // Number of rows
 public:
-	Matrix(); // Copy constructor
+	Matrix(const Matrix &m); // Copy constructor
     Matrix(int n); // Constructor, vector like [1xn]
     Matrix(int n, int m); // Constructor [nxm]
     ~Matrix(); // Destructor
@@ -62,32 +62,40 @@ public:
 
 // Constructor to destructor
 template <class T>
-Matrix<T>::Matrix()
-{}
+Matrix<T>::Matrix(const Matrix &m){
+    *this = mat;
+}
 
 template <class T>
 Matrix<T>::Matrix(int n) {
-
+    this->n = n;
+    mat = new T*[this->n];
 }
 
 template<class T>
 Matrix<T>::Matrix(int n, int m) {
-
+    this->n = n;
+    this->m = m;
+    mat = new T*[this->n];
+    for(int i = 0; i < n; i++){
+        mat[i] = new T[this->m];
+    }
 }
 
 template<class T>
-Matrix<T>::~Matrix() {
+Matrix<T>::~Matrix(){
+    delete[] mat;
 }
 
 //Setters and getters
 template<class T>
 void Matrix<T>::set(int i, int j, T value) {
-
+    mat[i][j] = value;
 }
 
 template<class T>
 T Matrix<T>::get(int i, int j) const {
-    return nullptr;
+    return mat[i][j];
 }
 
 template<class T>
@@ -130,7 +138,14 @@ T Matrix<T>::norm() const {
 //utilitary functions
 template<class T>
 void Matrix<T>::disp() const {
-
+    std::cout<< "/**"<< std::endl;
+    for(int i=0; i< this->n; i++){
+        for(int j=0; j< this->m; j++) {
+            std::cout<< mat->get(i,j);
+        }
+        std::cout<< "" <<std::endl;
+    }
+    std::cout<< "**/"<<std::endl;
 }
 
 template<class T>
