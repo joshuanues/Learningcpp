@@ -70,6 +70,9 @@ template <class T>
 Matrix<T>::Matrix(int n) {
     this->n = n;
     mat = new T*[this->n];
+    for(int i = 0; i < n; i++ ){
+        mat[i] = 0;
+    }
 }
 
 template<class T>
@@ -79,6 +82,11 @@ Matrix<T>::Matrix(int n, int m) {
     mat = new T*[this->n];
     for(int i = 0; i < n; i++){
         mat[i] = new T[this->m];
+    }
+    for(int i = 0; i< n; i++){
+        for(int j = 0; j < m; j++){
+            mat[i][j] = 0;
+        }
     }
 }
 
