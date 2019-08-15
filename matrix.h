@@ -163,7 +163,20 @@ T Matrix<T>::min() const {
 
 template<class T>
 T Matrix<T>::det() const {
-    return nullptr;
+    T det = 0;
+    Matrix<T> matrix(n,m);
+    matrix.disp();
+    for(int k = 0; k < m; k++){
+        int l = k + 1;
+        for(int i = l; i < n; i++){
+            for(int j=l; j < n; j++)
+                matrix.mat[i][j] = ( mat[k][k]*mat[i][j]-mat[k][j]*mat[i][k] )/mat[k][k];
+            matrix.disp();
+        }
+        det=det*matrix.mat[k+1][k+1];
+    }
+
+    return det;
 }
 
 template<class T>

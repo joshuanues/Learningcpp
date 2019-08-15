@@ -26,4 +26,7 @@ int main(){
     int min = m1.min();
     std::cout<< min << std::endl;
 
+    int det = m1.det();
+    std::cout<< det << std::endl;
+
 }
