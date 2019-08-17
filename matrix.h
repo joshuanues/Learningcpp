@@ -35,7 +35,7 @@ public:
     Matrix<T> *clone() const; // Clone the matrix
 
     // Booleans
-    bool equals(Matrix<T> *mat) const; // Matrix has same values as another
+    bool equals(Matrix<T> *matrix) const; // Matrix has same values as another
     bool is_diag() const; // Matrix is diagonal
     bool is_identity() const; // Check if matrix is identity
     bool is_symmetric() const; // Check if matrix is symmetric
@@ -163,25 +163,50 @@ T Matrix<T>::min() const {
 
 template<class T>
 T Matrix<T>::det() const {
-    T det = 0;
-    Matrix<T> matrix(n,m);
-    matrix.disp();
-    for(int k = 0; k < m; k++){
-        int l = k + 1;
-        for(int i = l; i < n; i++){
-            for(int j=l; j < n; j++)
-                matrix.mat[i][j] = ( mat[k][k]*mat[i][j]-mat[k][j]*mat[i][k] )/mat[k][k];
-            matrix.disp();
-        }
-        det=det*matrix.mat[k+1][k+1];
+    if (n == 2)
+    {
+        return (mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0]);
     }
+    else
+    {
+        int Actual = 0;
+        int k = 0;
+        int Numero = 0;
+        short Multriplicador;
 
-    return det;
+        Matrix<T> matt(n-1 ,n-1);
+
+        for (int i = 0; i<(n-1); i++)
+            matt.mat[i] = new int[n-1];
+
+        for (int l = 0; l < n; l++) // Desarrollo por filas
+        {
+            for (int j = 1; j < n; j++) // Creo una nueva matriz adjunta
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    if (i != l)
+                    {
+                        matt.mat[k][j-1] = mat[i][j];
+                        k++;
+                    }
+                }
+                k = 0;
+            }
+
+            if ( l % 2 != 0)
+                Multriplicador = -1;
+            else
+                Multriplicador = 1;
+            Numero += (mat[l][0]*matt.det()*Multriplicador);
+        }
+        return Numero;
+    }
 }
 
 template<class T>
 T Matrix<T>::norm() const {
-    return nullptr;
+
 }
 
 //utilitary functions
@@ -204,13 +229,27 @@ void Matrix<T>::save_to_file(std::string filename) const {
 
 template<class T>
 Matrix<T> *Matrix<T>::clone() const {
-    return nullptr;
+    Matrix<T> matrix(n ,m);
+    matrix.mat = mat;
+    return matrix;
 }
 
 //Booleans
 template<class T>
-bool Matrix<T>::equals(Matrix<T> *mat) const {
-    return false;
+bool Matrix<T>::equals(Matrix<T> *matrix) const {
+    if(matrix->size()[0] != n || matrix->size()[1] != m){
+        return false;
+    }
+    else{
+        for(int i= 0; i< n; i++){
+            for(int j = 0; j < m; j++){
+                if(mat[i][j] != matrix->mat[i][j]){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 }
 
 template<class T>
