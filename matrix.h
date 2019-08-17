@@ -206,7 +206,18 @@ T Matrix<T>::det() const {
 
 template<class T>
 T Matrix<T>::norm() const {
-
+    int pret = 0;
+    int pret2;
+    for(int i = 0; i < m; i++){
+        pret2 = 0;
+        for(int j = 0; j < n; j++){
+            pret2 += mat[j][i];
+        }
+        if(pret2 > pret){
+            pret = pret2;
+        }
+    }
+    return pret;
 }
 
 //utilitary functions
@@ -254,27 +265,53 @@ bool Matrix<T>::equals(Matrix<T> *matrix) const {
 
 template<class T>
 bool Matrix<T>::is_diag() const {
-    return false;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            if(i != j){
+                if(mat[i][j] != 0){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 }
 
 template<class T>
 bool Matrix<T>::is_identity() const {
-    return false;
+    if(this->is_diag()){
+        for(int i = 0; i < n; i++){
+            if(mat[i][i] != 1){
+                return false;
+            }
+        }
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 template<class T>
 bool Matrix<T>::is_symmetric() const {
-    return false;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < i; j++){
+            if(mat[i][j] != mat[j][i]){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 template<class T>
 bool Matrix<T>::is_square() const {
-    return false;
+    return n == m;
 }
 
 template<class T>
 bool Matrix<T>::is_vector() const {
-    return false;
+    return m < 2;
 }
 
 template<class T>

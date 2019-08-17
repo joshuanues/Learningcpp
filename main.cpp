@@ -39,5 +39,24 @@ int main(){
     std::cout<< "det: " << det << std::endl;
 
     std::cout<< "t o f: " << t << std::endl;
+    /////////////////////////////////////////////
+
+    Matrix<int> m3(3,3);
+
+    m3.set(0,0,3);
+    m3.set(0,1,5);
+    m3.set(0,2,7);
+    m3.set(1,0,2);
+    m3.set(1,1,6);
+    m3.set(1,2,4);
+    m3.set(2,0,0);
+    m3.set(2,1,2);
+    m3.set(2,2,8);
+
+    m3.disp();
+
+    int algo = m3.norm();
+    std::cout<< algo<< std::endl;
+
 
 }
