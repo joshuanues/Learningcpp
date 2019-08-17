@@ -311,17 +311,17 @@ bool Matrix<T>::is_square() const {
 
 template<class T>
 bool Matrix<T>::is_vector() const {
-    return m < 2;
+    return m == 0 && n > 0;
 }
 
 template<class T>
 bool Matrix<T>::operator==(const Matrix<T> &matrix) const {
-    return false;
+    return this->equals(&matrix);
 }
 
 template<class T>
 bool Matrix<T>::operator!=(const Matrix<T> &matrix) const {
-    return false;
+    return !this->equals(&matrix);
 }
 
 
@@ -343,31 +343,64 @@ Matrix<T> *Matrix<T>::operator*=(const Matrix<T> &matrix) const {
 
 template<class T>
 Matrix<T> &Matrix<T>::operator*=(T a) {
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            mat[i][j] *= a;
+        }
+    }
     return 0;
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator*=(T a) const {
-    return nullptr;
+    Matrix<T> matrix(n , m);
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            matrix.mat = mat[i][j]*a;
+        }
+    }
+    return matrix;
 }
 
 template<class T>
 Matrix<T> &Matrix<T>::operator+=(const Matrix<T> *matrix) {
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            mat[i][j] += matrix->mat[i][j];
+        }
+    }
     return 0;
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator+(const Matrix<T> &matrix) const {
+    Matrix<T> matt(n, m);
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            matt->mat[i][j] = mat[i][j] + matrix->mat[i][j];
+        }
+    }
     return nullptr;
 }
 
 template<class T>
 Matrix<T> &Matrix<T>::operator-=(const Matrix<T> *matrix) {
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            mat[i][j] -= matrix->mat[i][j];
+        }
+    }
     return 0;
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator-(const Matrix<T> &matrix) const {
+    Matrix<T> matt(n, m);
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            matt->mat[i][j] = mat[i][j] - matrix->mat[i][j];
+        }
+    }
     return nullptr;
 }
 
