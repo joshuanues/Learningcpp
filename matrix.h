@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <fstream>
 
 template<class T>
 class Matrix {
@@ -69,7 +70,7 @@ Matrix<T>::Matrix(const Matrix &m){
 template <class T>
 Matrix<T>::Matrix(int n) {
     this->n = n;
-    mat = new T*[this->n];
+    this->m = 0;
     for(int i = 0; i < n; i++ ){
         mat[i] = 0;
     }
@@ -235,7 +236,8 @@ void Matrix<T>::disp() const {
 
 template<class T>
 void Matrix<T>::save_to_file(std::string filename) const {
-
+    std::ofstream archivo;
+    archivo << this->disp() << std::endl;
 }
 
 template<class T>
@@ -328,17 +330,45 @@ bool Matrix<T>::operator!=(const Matrix<T> &matrix) const {
 //Mathematical operations
 template<class T>
 Matrix<T> *Matrix<T>::transpose() const {
-    return nullptr;
+    Matrix<T> matrix(n, m);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            matrix.mat[i][j] = mat[j][i];
+        }
+    }
+    return matrix;
 }
 
 template<class T>
 Matrix<T> &Matrix<T>::operator*=(const Matrix<T> &matrix) {
+    Matrix<T> matt(n, m);
+    T sol;
+    for(int i = 0; i < n; i++){
+        for( int j = 0; j < matrix.size()[1]; j++){
+            for(int k = 0; k < m; k++){
+                sol += mat[i][k] * matrix.mat[k][j];
+            }
+            matt.mat[i][j] = sol;
+        }
+    }
+    mat = matt.mat;
+    ~matt();
     return 0;
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator*=(const Matrix<T> &matrix) const {
-    return nullptr;
+    Matrix<T> matt(n, m);
+    T sol;
+    for(int i = 0; i < n; i++){
+        for( int j = 0; j < matrix.size()[1]; j++){
+            for(int k = 0; k < m; k++){
+                sol += mat[i][k] * matrix.mat[k][j];
+            }
+            matt.mat[i][j] = sol;
+        }
+    }
+    return matt;
 }
 
 template<class T>
@@ -406,7 +436,11 @@ Matrix<T> *Matrix<T>::operator-(const Matrix<T> &matrix) const {
 
 template<class T>
 void Matrix<T>::normalize() {
-
+    for(int i = 0; i < n ; i++){
+        for(int j = 0; j < m; j++){
+            mat[i][j] == mat[i][j]/this->norm();
+        }
+    }
 }
 
 //Bonus
