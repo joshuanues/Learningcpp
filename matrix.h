@@ -173,7 +173,7 @@ T Matrix<T>::det() const {
         int Actual = 0;
         int k = 0;
         int Numero = 0;
-        short Multriplicador;
+        short Multiplicador;
 
         Matrix<T> matt(n-1 ,n-1);
 
@@ -196,10 +196,10 @@ T Matrix<T>::det() const {
             }
 
             if ( l % 2 != 0)
-                Multriplicador = -1;
+                Multiplicador = -1;
             else
-                Multriplicador = 1;
-            Numero += (mat[l][0]*matt.det()*Multriplicador);
+                Multiplicador = 1;
+            Numero += (mat[l][0]*matt.det()*Multiplicador);
         }
         return Numero;
     }
