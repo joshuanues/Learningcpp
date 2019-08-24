@@ -43,13 +43,13 @@ int main(){
     bool t = m1.equals(&m2);
     int norm = m3.norm();
 
-    assert(max == 3);
-    assert(t);
-    assert(det == 6);
-    assert(norm == 19);
+    assert(max == 3);//Assert max()
+    assert(t);//assert equals()
+    assert(det == 6);//assert det()
+    assert(norm == 19);//assert norm()
 
-    m1.fill(5);
+    m1.fill(5);//para assert fill()
 
-    assert(m1.equals(&m4));
+    assert(m1.equals(&m4));//assert fill() llena m1 y compara con una matriz llena del mismo valor
 }
 
