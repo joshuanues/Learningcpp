@@ -13,3 +13,5 @@ primos, ¿Qué ocurre en términos de precisión?
 
 ¿Pueden haber problemas de precisión si se comparan dos matrices idénticas pero con diferente
 tipo? (Matrix p1 == p2)
+
+-El método equals no dejaría compilar por ser de distinto tipo. 
