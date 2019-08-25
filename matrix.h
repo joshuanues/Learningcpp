@@ -11,6 +11,7 @@ private:
     int m = 0; // Number of rows
 public:
 	Matrix(const Matrix &m); // Copy constructor
+	Matrix();//Void contructor
     Matrix(int n); // Constructor, vector like [1xn]
     Matrix(int n, int m); // Constructor [nxm]
     ~Matrix(); // Destructor
@@ -32,7 +33,7 @@ public:
 
     // Utilitary functions
     void disp() const; // Display matrix to console
-    void save_to_file(std::string filename) const; // Save
+    void save_to_file(const std::string& filename) const; // Save
     Matrix<T> *clone() const; // Clone the matrix
 
     // Booleans
@@ -64,7 +65,10 @@ public:
 // Constructor to destructor
 template <class T>
 Matrix<T>::Matrix(const Matrix &m){
-    *this = mat;
+    int *a = m.size();
+    n = a[0];
+    this->m = a[1];
+    mat = m.mat;
 }
 
 template <class T>
@@ -224,20 +228,33 @@ T Matrix<T>::norm() const {
 //utilitary functions
 template<class T>
 void Matrix<T>::disp() const {
-    std::cout<< "/**"<< std::endl;
+    std::string expression;
+    expression = "/**\n";
     for(int i=0; i< this->n; i++){
         for(int j=0; j< this->m; j++) {
-            std::cout<< mat[i][j];
+            expression += std::to_string(mat[i][j])+" ";
         }
-        std::cout<< "" <<std::endl;
+        expression+="\n";
     }
-    std::cout<< "**/"<<std::endl;
+    expression += "**/";
+    std::cout << expression << std::endl;
 }
 
 template<class T>
-void Matrix<T>::save_to_file(std::string filename) const {
+void Matrix<T>::save_to_file(const std::string& filename) const{
     std::ofstream archivo;
-    archivo << this->disp() << std::endl;
+    std::string expression;
+    expression = "/**\n";
+    for(int i=0; i< this->n; i++){
+        for(int j=0; j< this->m; j++) {
+            expression += std::to_string(mat[i][j]);
+        }
+        expression+="\n";
+    }
+    expression += "**/";
+    archivo.open(filename);
+    archivo << expression << std::endl;
+    archivo.close();
 }
 
 template<class T>
@@ -318,54 +335,79 @@ bool Matrix<T>::is_vector() const {
 
 template<class T>
 bool Matrix<T>::operator==(const Matrix<T> &matrix) const {
-    return this->equals(&matrix);
+    if(n != matrix.size()[0] || m != matrix.size()[1]){
+        return false;
+    }
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            if(mat[i][j] != matrix.get(i,j)){
+                return false;
+            }
+
+        }
+    }
+    return true;
 }
 
 template<class T>
 bool Matrix<T>::operator!=(const Matrix<T> &matrix) const {
-    return !this->equals(&matrix);
+    if(n != matrix.size()[0] || m != matrix.size()[1]){
+        return true;
+    }
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            if(mat[i][j] != matrix.get(i,j)){
+                return true;
+            }
+        }
+    }
+    return false;
 }
-
 
 //Mathematical operations
 template<class T>
 Matrix<T> *Matrix<T>::transpose() const {
-    Matrix<T> matrix(n, m);
+    Matrix<T> matrix(n,m);
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             matrix.mat[i][j] = mat[j][i];
         }
     }
-    return matrix;
+    return &matrix;
 }
 
 template<class T>
 Matrix<T> &Matrix<T>::operator*=(const Matrix<T> &matrix) {
     Matrix<T> matt(n, m);
-    T sol;
+    T sol = 0;
     for(int i = 0; i < n; i++){
         for( int j = 0; j < matrix.size()[1]; j++){
             for(int k = 0; k < m; k++){
                 sol += mat[i][k] * matrix.mat[k][j];
             }
             matt.mat[i][j] = sol;
+            sol = 0;
         }
     }
-    mat = matt.mat;
-    ~matt();
-    return 0;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            this->set(i,j, matt.get(i,j));
+        }
+    }
+    return *this;
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator*=(const Matrix<T> &matrix) const {
     Matrix<T> matt(n, m);
-    T sol;
+    T sol = 0;
     for(int i = 0; i < n; i++){
         for( int j = 0; j < matrix.size()[1]; j++){
             for(int k = 0; k < m; k++){
                 sol += mat[i][k] * matrix.mat[k][j];
             }
             matt.mat[i][j] = sol;
+            sol = 0;
         }
     }
     return matt;
@@ -378,7 +420,7 @@ Matrix<T> &Matrix<T>::operator*=(T a) {
             mat[i][j] *= a;
         }
     }
-    return 0;
+    return *this;
 }
 
 template<class T>
@@ -399,7 +441,7 @@ Matrix<T> &Matrix<T>::operator+=(const Matrix<T> *matrix) {
             mat[i][j] += matrix->mat[i][j];
         }
     }
-    return 0;
+    return *this;
 }
 
 template<class T>
@@ -410,7 +452,7 @@ Matrix<T> *Matrix<T>::operator+(const Matrix<T> &matrix) const {
             matt->mat[i][j] = mat[i][j] + matrix->mat[i][j];
         }
     }
-    return nullptr;
+    return this;
 }
 
 template<class T>
@@ -420,7 +462,7 @@ Matrix<T> &Matrix<T>::operator-=(const Matrix<T> *matrix) {
             mat[i][j] -= matrix->mat[i][j];
         }
     }
-    return 0;
+    return *this;
 }
 
 template<class T>
@@ -431,7 +473,7 @@ Matrix<T> *Matrix<T>::operator-(const Matrix<T> &matrix) const {
             matt->mat[i][j] = mat[i][j] - matrix->mat[i][j];
         }
     }
-    return nullptr;
+    return this;
 }
 
 template<class T>
@@ -447,4 +489,10 @@ void Matrix<T>::normalize() {
 template<class T>
 Matrix<T> Matrix<T>::inverse() const {
     return Matrix<T>();
+}
+
+template<class T>
+Matrix<T>::Matrix() {
+    n = 0;
+    m = 0;
 }

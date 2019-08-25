@@ -2,7 +2,11 @@
 // Created by joshua on 20/08/2019.
 //
 #include <cassert>
+#include <sstream>
 #include "matrix.h"
+
+
+
 
 int main(){
     //inicializar
@@ -36,6 +40,12 @@ int main(){
     m4.set(1,0,5);
     m4.set(0,1,5);
 
+    Matrix<double> m5(2,2);
+    m5.set(1,1,5);
+    m5.set(0,0,5);
+    m5.set(1,0,5);
+    m5.set(0,1,5);
+
     //Assert
     int max = m1.max();
 
@@ -44,12 +54,93 @@ int main(){
     int norm = m3.norm();
 
     assert(max == 3);//Assert max()
-    assert(t);//assert equals()
+    assert(t);//assert equals(), set()
     assert(det == 6);//assert det()
     assert(norm == 19);//assert norm()
 
     m1.fill(5);//para assert fill()
 
     assert(m1.equals(&m4));//assert fill() llena m1 y compara con una matriz llena del mismo valor
+
+    Matrix<int> m6(m1);//constructor copia
+
+    assert(m1.equals(&m6));//assert constructor copia
+
+    assert(m1.get(1,1) == 5);//assert get
+
+    assert(m1.length() == 2);//assert length()
+
+    assert(m2.min() == -1);//assert min()
+
+
+    Matrix<int> m7(1,1);
+
+    m7.set(0,0,1);
+
+    m7.save_to_file("test.txt");//guardar matriz en archivo
+
+    std::ifstream file;
+    std::string expression;
+    expression = "/**1**/";
+
+    file.open("test.txt");
+    std::string fread;
+    std::string tread;
+    while(!file.eof()){
+        std::getline(file, fread);
+        tread += fread;
+    }
+    file.close();
+
+    assert(expression == tread);//testea que efectivamente este la matriz en el txt
+
+    m1.disp();//muestra m1
+
+    //Assert booleans
+
+    Matrix<int> id(2,2);
+    id.set(0,0,1);
+    id.set(1,1,1);
+
+    assert(id.is_identity());//assert is_identity()
+    assert(id.is_diag());//assert is_diag()
+    assert(id.is_symmetric());//assert is_symmetric()
+    assert(id.is_square());//assert is_square()
+
+    Matrix<int> vec(1, 0);
+
+    assert(vec.is_vector());//assert is_vector()
+    assert(m1 == m4);
+    assert(m1 != m2);
+
+    //Assert operations
+    /*
+    m3.disp();
+    const Matrix<int> *s = m3.transpose();
+    s->disp();
+    return 0;
+     */
+    m3 *= (5);
+    m3.disp();
+
+    const Matrix<int> mult = m3*=(5);
+    mult.disp();
+
+    m3 += &m3;//suma consigo misma
+    m3.disp();
+
+    m3 -= &m3;
+    m3.disp();
+
+    m3.fill(2);
+    m3.disp();
+    m3 *= m3;
+    m3.disp();
+
+
+}
+
+void _transpose_test(){
+    ;
 }
 
