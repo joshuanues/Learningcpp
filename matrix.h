@@ -98,8 +98,6 @@ Matrix<T>::Matrix(int n, int m) {
 template<class T>
 Matrix<T>::~Matrix(){
     delete[] mat;
-    delete n;
-    delete m;
 }
 
 //Setters and getters
@@ -448,44 +446,64 @@ Matrix<T> *Matrix<T>::operator*=(T a) const {
 
 template<class T>
 Matrix<T> &Matrix<T>::operator+=(const Matrix<T> *matrix) {
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            mat[i][j] += matrix->mat[i][j];
+    if(matrix->is_square() && this->is_square() && this->size()[0] == matrix->size()[0] && this->size()[1] == matrix->size()[1]) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                mat[i][j] += matrix->mat[i][j];
+            }
         }
+        return *this;
     }
-    return *this;
+    else{
+        throw std::logic_error("Dimensiones no validas");
+    }
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator+(const Matrix<T> &matrix) const {
-    Matrix<T> matt(n, m);
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            matt->mat[i][j] = mat[i][j] + matrix->mat[i][j];
+    if(matrix->is_square() && this->is_square() && this->size()[0] == matrix->size()[0] && this->size()[1] == matrix->size()[1]) {
+        Matrix<T> matt(n, m);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                matt->mat[i][j] = mat[i][j] + matrix->mat[i][j];
+            }
         }
+        return this;
     }
-    return this;
-}
+    else{
+        throw std::logic_error("Dimensiones no validas");
+    }
+    }
 
 template<class T>
 Matrix<T> &Matrix<T>::operator-=(const Matrix<T> *matrix) {
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            mat[i][j] -= matrix->mat[i][j];
+    if(matrix->is_square() && this->is_square() && this->size()[0] == matrix->size()[0] && this->size()[1] == matrix->size()[1]) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                mat[i][j] -= matrix->mat[i][j];
+            }
         }
+        return *this;
     }
-    return *this;
+    else{
+        throw std::logic_error("Dimensiones no validas");
+    }
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator-(const Matrix<T> &matrix) const {
-    Matrix<T> matt(n, m);
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            matt->mat[i][j] = mat[i][j] - matrix->mat[i][j];
+    if(matrix->is_square() && this->is_square() && this->size()[0] == matrix->size()[0] && this->size()[1] == matrix->size()[1]) {
+        Matrix<T> matt(n, m);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                matt->mat[i][j] = mat[i][j] - matrix->mat[i][j];
+            }
         }
+        return this;
     }
-    return this;
+    else{
+        throw std::logic_error("Dimensiones no validas");
+    }
 }
 
 template<class T>

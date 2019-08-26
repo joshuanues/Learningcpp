@@ -196,7 +196,20 @@ void _resta_test(){
     m1.set(1,0,-1);
     m1.set(0,1,0);
     m1 -= &m1;
+
+    Matrix<int> zeros(2,2);
     m1.disp();
+    assert(m1 == zeros);//verifica que m1-m1 es una matriz de ceros.
+
+    Matrix<double> zeros2(6,6);
+    Matrix<double> ones(6,6);
+    ones.fill(1);
+    Matrix<double> test(6,6);
+    test.fill(-1);
+    zeros2 -= &ones;
+    assert(test == zeros2);
+
+
 }
 
 void _det_test() {
