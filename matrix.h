@@ -98,6 +98,8 @@ Matrix<T>::Matrix(int n, int m) {
 template<class T>
 Matrix<T>::~Matrix(){
     delete[] mat;
+    delete n;
+    delete m;
 }
 
 //Setters and getters

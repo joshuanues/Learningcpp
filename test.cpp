@@ -148,7 +148,6 @@ void _boolean_test(){
 }
 
 void _mult_test(){
-
     Matrix<int> m3(3,3);
     m3.set(0,0,3);
     m3.set(0,1,5);
@@ -176,8 +175,6 @@ void _mult_test(){
     m3.disp();
     m3 *= m3;
     m3.disp();
-
-
 }
 
 void _suma_test(){
