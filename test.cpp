@@ -5,11 +5,62 @@
 #include <sstream>
 #include "matrix.h"
 
-
-
+void _setget_test();
+void _boolean_test();
+void _mult_test();
+void _suma_test();
+void _resta_test();
+void _det_test();
 
 int main(){
-    //inicializar
+    _boolean_test();
+    _setget_test();
+    _boolean_test();
+    _mult_test();
+    _suma_test();
+    _resta_test();
+    _det_test();
+    return 0;
+}
+
+void _setget_test() {
+    Matrix<int> m1(2,2);
+    Matrix<int> m2(2,2);
+    Matrix<int> m3(3,3);
+
+    m1.set(1,1,3);
+    m1.set(0,0,2);
+    m1.set(1,0,-1);
+    m1.set(0,1,0);
+
+    m2.set(0,0,2);
+    m2.set(1,1,3);
+    m2.set(1,0,-1);
+    m2.set(0,1,0);
+
+    m3.set(0,0,3);
+    m3.set(0,1,5);
+    m3.set(0,2,7);
+    m3.set(1,0,2);
+    m3.set(1,1,6);
+    m3.set(1,2,4);
+    m3.set(2,0,0);
+    m3.set(2,1,2);
+    m3.set(2,2,8);
+
+    //Assert
+    int max = m1.max();
+    bool t = m1.equals(&m2);
+    int norm = m3.norm();
+
+    assert(max == 3);//Assert max()
+    assert(t);//assert equals(), set()
+    assert(norm == 19);//assert norm()
+
+
+}
+
+void _boolean_test(){
     Matrix<int> m1(2,2);
     Matrix<int> m2(2,2);
     Matrix<int> m3(3,3);
@@ -39,24 +90,6 @@ int main(){
     m4.set(0,0,5);
     m4.set(1,0,5);
     m4.set(0,1,5);
-
-    Matrix<double> m5(2,2);
-    m5.set(1,1,5);
-    m5.set(0,0,5);
-    m5.set(1,0,5);
-    m5.set(0,1,5);
-
-    //Assert
-    int max = m1.max();
-
-    int det = m1.det();
-    bool t = m1.equals(&m2);
-    int norm = m3.norm();
-
-    assert(max == 3);//Assert max()
-    assert(t);//assert equals(), set()
-    assert(det == 6);//assert det()
-    assert(norm == 19);//assert norm()
 
     m1.fill(5);//para assert fill()
 
@@ -112,14 +145,21 @@ int main(){
     assert(vec.is_vector());//assert is_vector()
     assert(m1 == m4);
     assert(m1 != m2);
+}
 
+void _mult_test(){
+
+    Matrix<int> m3(3,3);
+    m3.set(0,0,3);
+    m3.set(0,1,5);
+    m3.set(0,2,7);
+    m3.set(1,0,2);
+    m3.set(1,1,6);
+    m3.set(1,2,4);
+    m3.set(2,0,0);
+    m3.set(2,1,2);
+    m3.set(2,2,8);
     //Assert operations
-    /*
-    m3.disp();
-    const Matrix<int> *s = m3.transpose();
-    s->disp();
-    return 0;
-     */
     m3 *= (5);
     m3.disp();
 
@@ -140,7 +180,37 @@ int main(){
 
 }
 
-void _transpose_test(){
-    ;
+void _suma_test(){
+    Matrix<int> m1(2,2);
+
+    m1.set(1,1,3);
+    m1.set(0,0,2);
+    m1.set(1,0,-1);
+    m1.set(0,1,0);
+    m1 += &m1;//suma consigo misma
+    m1.disp();
+}
+
+void _resta_test(){
+    Matrix<int> m1(2,2);
+
+    m1.set(1,1,3);
+    m1.set(0,0,2);
+    m1.set(1,0,-1);
+    m1.set(0,1,0);
+    m1 -= &m1;
+    m1.disp();
+}
+
+void _det_test() {
+    Matrix<int> m1(2,2);
+
+    m1.set(1,1,3);
+    m1.set(0,0,2);
+    m1.set(1,0,-1);
+    m1.set(0,1,0);
+
+    int det = m1.det();
+    assert(det == 6);//assert det()
 }
 

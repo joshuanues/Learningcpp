@@ -378,39 +378,49 @@ Matrix<T> *Matrix<T>::transpose() const {
 
 template<class T>
 Matrix<T> &Matrix<T>::operator*=(const Matrix<T> &matrix) {
-    Matrix<T> matt(n, m);
-    T sol = 0;
-    for(int i = 0; i < n; i++){
-        for( int j = 0; j < matrix.size()[1]; j++){
-            for(int k = 0; k < m; k++){
-                sol += mat[i][k] * matrix.mat[k][j];
+    if(m == matrix.size()[0]) {
+        Matrix<T> matt(n, m);
+        T sol = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < matrix.size()[1]; j++) {
+                for (int k = 0; k < m; k++) {
+                    sol += mat[i][k] * matrix.mat[k][j];
+                }
+                matt.mat[i][j] = sol;
+                sol = 0;
             }
-            matt.mat[i][j] = sol;
-            sol = 0;
         }
-    }
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            this->set(i,j, matt.get(i,j));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                this->set(i, j, matt.get(i, j));
+            }
         }
+        return *this;
     }
-    return *this;
+    else{
+        throw std::logic_error("Dimensiones no validas");
+    }
 }
 
 template<class T>
 Matrix<T> *Matrix<T>::operator*=(const Matrix<T> &matrix) const {
-    Matrix<T> matt(n, m);
-    T sol = 0;
-    for(int i = 0; i < n; i++){
-        for( int j = 0; j < matrix.size()[1]; j++){
-            for(int k = 0; k < m; k++){
-                sol += mat[i][k] * matrix.mat[k][j];
+    if(m == matrix.size()[0]) {
+        Matrix<T> matt(n, m);
+        T sol = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < matrix.size()[1]; j++) {
+                for (int k = 0; k < m; k++) {
+                    sol += mat[i][k] * matrix.mat[k][j];
+                }
+                matt.mat[i][j] = sol;
+                sol = 0;
             }
-            matt.mat[i][j] = sol;
-            sol = 0;
         }
+        return matt;
     }
-    return matt;
+    else{
+        throw std::logic_error("Dimensiones no validas");
+    }
 }
 
 template<class T>
